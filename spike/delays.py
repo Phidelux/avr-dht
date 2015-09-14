@@ -6,15 +6,13 @@ BAUDRATES = [
   14400, 9600, 4800, 2400, 1200, 300
 ]
 
-def cyclesPerMs(cpuFreq, baudrate):
-  # Cycles per bit * time per cycle = time per bit
-  # return (cpuFreq / baudrate) * (1000000 / cpuFreq)
+def cyclesPerSample16(cpuFreq, baudrate):
+  # Mikroseconds per bit
+  # return 1000000 / baudrate
+  return (cpuFreq / ((baudrate * 16) - 1))
 
-  # Cycles per microsecond * microseconds per bit = time per bit
-  # return (cpuFreq / baudrate) * (1000000 / cpuFreq)
-
-  # Cycles per bit
-  return 1000000 / baudrate
+def cyclesPerSample8(cpuFreq, baudrate):
+  return (cpuFreq / (baudrate * 8) - 1)
 
 def main():
   # Create an instance of the OptionParser, ...
@@ -36,6 +34,7 @@ def main():
 
   print("\nCPU Frequency: {:>11}".format(options.frequency))
 
+  # 16 samples
   if options.codeStyle:
     print("\n{")
   else:
@@ -45,7 +44,31 @@ def main():
     print(separator)
 
   for baudrate in BAUDRATES:
-    cycles = cyclesPerMs(options.frequency, baudrate)
+    cycles = cyclesPerSample16(options.frequency, baudrate)
+
+    if options.codeStyle:
+      print("\t{0}{3:>7}{1}{4:>5}{1}{5:>5}{1}{6:>5}{2},".format(
+        '{', ',', '}', baudrate, round(cycles/2), round(cycles), round(cycles-2)))
+    else:
+      print("| {:>11} | {:>11} | {:>13} | {:>7} |".format(
+        baudrate, round(cycles/2), round(cycles), round(cycles-2)))
+
+  if options.codeStyle:
+    print("}")
+  else:
+    print(separator)
+
+  # 8 Samples
+  if options.codeStyle:
+    print("\n{")
+  else:
+    print("\n" + separator)
+    print("| {:>11} | {:>11} | {:>13} | {:>7} |".format(
+      "Baudrate", "RX Center", "RX Bit Skip", "TX"))
+    print(separator)
+
+  for baudrate in BAUDRATES:
+    cycles = cyclesPerSample8(options.frequency, baudrate)
 
     if options.codeStyle:
       print("\t{0}{3:>7}{1}{4:>5}{1}{5:>5}{1}{6:>5}{2},".format(
