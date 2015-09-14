@@ -7,8 +7,6 @@ BAUDRATES = [
 ]
 
 def cyclesPerSample16(cpuFreq, baudrate):
-  # Mikroseconds per bit
-  # return 1000000 / baudrate
   return (cpuFreq / ((baudrate * 16) - 1))
 
 def cyclesPerSample8(cpuFreq, baudrate):
