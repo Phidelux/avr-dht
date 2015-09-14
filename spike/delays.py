@@ -7,8 +7,15 @@ BAUDRATES = [
 ]
 
 def cyclesPerMs(cpuFreq, baudrate):
-  return (cpuFreq / baudrate) / (cpuFreq / 1000000)
-  
+  # Cycles per bit * time per cycle = time per bit
+  # return (cpuFreq / baudrate) * (1000000 / cpuFreq)
+
+  # Cycles per microsecond * microseconds per bit = time per bit
+  # return (cpuFreq / baudrate) * (1000000 / cpuFreq)
+
+  # Cycles per bit
+  return 1000000 / baudrate
+
 def main():
   # Create an instance of the OptionParser, ...
   p = optparse.OptionParser(
@@ -19,7 +26,7 @@ def main():
   p.add_option("--code-style", "-c", action="store_true", dest="codeStyle", 
       default=False, help="Print result table in code style")
   p.add_option("--frequency", "-f", action="store", type="int", dest="frequency",
-      default=9600, help="CPU frequency used to calculate the delays")
+      default=8000000, help="CPU frequency used to calculate the delays")
   
   # ... and parse the command line parameters.
   options, arguments = p.parse_args()
@@ -27,8 +34,10 @@ def main():
   # Display a table of all important delays.
   separator = "+{:-<13}+{:-<13}+{:-<15}+{:-<9}+".format("", "", "", "")
 
+  print("\nCPU Frequency: {:>11}".format(options.frequency))
+
   if options.codeStyle:
-    print("{")
+    print("\n{")
   else:
     print("\n" + separator)
     print("| {:>11} | {:>11} | {:>13} | {:>7} |".format(
@@ -43,10 +52,10 @@ def main():
         '{', ',', '}', baudrate, round(cycles/2), round(cycles), round(cycles-2)))
     else:
       print("| {:>11} | {:>11} | {:>13} | {:>7} |".format(
-        round(cycles/2), round(cycles), round(cycles-2)))
+        baudrate, round(cycles/2), round(cycles), round(cycles-2)))
 
   if options.codeStyle:
-    print("}")
+    print("}\n")
   else:
     print(separator + "\n")
 
