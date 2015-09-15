@@ -22,7 +22,8 @@
  @defgroup avedo DHTxx library <dht.h>
  @code #include <dht.h> @endcode
 
- @brief Basic routines for interfacing with the DHTxx temperature and humidity sensor family.
+ @brief Basic routines for interfacing with the DHTxx temperature and humidity sensor family as specified in http://www.micro4you.com/files/sensor/DHT11.pdf 
+ and https://www.sparkfun.com/datasheets/Sensors/Temperature/DHT22.pdf.
 
  @author Andreas Wilhelm info@avedo.net http://avedo.net
  @version 0.1
@@ -47,7 +48,7 @@
  * The four lines of a DHTxx temperature and humidity sensor
  * connect to VCC (3 to 5V power), Data in/out, nothing and GND. 
  * You can change the pin used by the data port by adjusting 
- * DHT_DDR, DHT_PORT, DHT_PIN and DHT_DATA_PIN.
+ * DHT_DATA_DDR, DHT_DATA_PORT, DHT_DATA_PIN and DHT_DATA.
  * 
  * Normally the data pin of the DHT is mapped to PORTD, PIND and PD0.
  * 
@@ -57,26 +58,26 @@
  * just add -D_DHT_CONFIG to the CDEFS section in
  * the Makefile. All definitions specified there will override the default ones.
  */
-#ifndef DHT_DDR
-#define DHT_DDR DDRD
+#ifndef DHT_DATA_DDR
+#define DHT_DATA_DDR DDRD
 #endif
 
-#ifndef DHT_PORT
-#define DHT_PORT PORTD
-#endif
-
-#ifndef DHT_PIN
-#define DHT_PIND PIND
+#ifndef DHT_DATA_PORT
+#define DHT_DATA_PORT PORTD
 #endif
 
 #ifndef DHT_DATA_PIN
-#define DHT_DATA_PIN PD0
+#define DHT_DATA_PIN PIND
+#endif
+
+#ifndef DHT_DATA
+#define DHT_DATA PD0
 #endif
 
 /**
- * @name Definition of connection timeout 
+ * @name Definition of the DHT type.
  * 
- * This timeout can be adjusted, if you have problems fetching the data.
+ * You can adjust the type, .
  * 
  * Adjust this definition to your needs. This definition could also         
  * be defined in a seperate include file dht_config.h instead of           
@@ -84,8 +85,8 @@
  * just add -D_DHT_CONFIG to the CDEFS section in                     
  * the Makefile. All definitions specified there will override the default ones.
  */
-#define DHT_DHT11
-#define DHT_DHT22
+#define DHT_DHT11 0
+#define DHT_DHT22 1
 
 #ifndef DHT_TYPE
 #define DHT_TYPE DHT11
