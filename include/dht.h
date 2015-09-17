@@ -1,15 +1,15 @@
 #ifndef DHT_H
 #define DHT_H
 
-#include <stdio.h>
 #include <avr/io.h>
 
 /*************************************************************************
- Title  :   C include file for the DHT library (dht.c)
- Author:    Andreas Wilhelm <info@avedo.net> http://avedo.net
- File:      $Id: dht.h,v 0.1 2015/07/16 13:45:07 awilhelm Exp $
- Software:  AVR-GCC 4.x
- Hardware:  any AVR device
+Title  :  C include file for the DHT library (dht.c)
+Author:   Andreas Wilhelm <info@bornageek.com> http://bornageek.com
+Software: AVR-GCC 4.x
+Hardware: any AVR device 
+License:  Apacher License 2.0
+Usage:    see Doxygen Manual
 ***************************************************************************/
 
 /**
