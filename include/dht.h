@@ -4,11 +4,11 @@
 #include <avr/io.h>
 
 /*************************************************************************
-Title  :  C include file for the DHT library (dht.c)
+Title:    C include file for the DHT library (dht.c)
 Author:   Andreas Wilhelm <info@bornageek.com> http://bornageek.com
 Software: AVR-GCC 4.x
 Hardware: any AVR device 
-License:  Apacher License 2.0
+License:  Apache License 2.0
 Usage:    see Doxygen Manual
 ***************************************************************************/
 
